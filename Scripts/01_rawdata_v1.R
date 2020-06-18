@@ -7,9 +7,11 @@
 ### By Daniel Reyes Corral
 
 ### Raw data
-#Tribulus1 has replaces all spine distances of 0 into NAs
+#Tribulus1 has replaces all spine distances of 0 into NAs##########
+
 tribulus <- read.csv("~/R/Tribulus/Tribulus Natural populations/Tribulus-Natural-population/Data/Raw/All time Tribulus1.csv")
 head(natpop)
+View(tribulus)
 summary(natpop)
 
 #Extracting data from 2017 - 2019
@@ -20,7 +22,7 @@ clean_d <- filter(clean_l, !is.na(depth))
 clean_s <- filter(clean_d, !is.na(longest_spine))
 
 
-################spine tip distance measurements were ommited in 2019. This is a PCA of all variables BUT spine distance from 2017 - 2019
+################spine tip distance measurements were ommited in 2019. This is a PCA of all variables BUT spine distance from 2017 - 2019############
 tribulus <- clean_s
 Pr <- prcomp(tribulus[,8:11], scale. = TRUE)
 Pr
@@ -39,7 +41,12 @@ head(tribulusPC)
 ggplot(tribulusPC, aes(PC1, PC2, col = island)) + stat_ellipse(geom = "polygon", col = "black", alpha = 0.5) + geom_point(shape = 21, col = "black")
 custom_pca()
 
-###############Including spine distance BUT ommiting 2019 dataaset
+#### I removed four outliers that were from 2018 in Santa Cruz that showed larger sizes overall. I also corrected four outliers that showed mistakes in the measurements. 
+
+
+
+
+###############Including spine distance BUT ommiting 2019 dataaset############################################
 clean_sd <- filter(clean_s, !is.na(spine_tip_distance))
 PrSd <- prcomp(clean_sd[,8:12], scale. = TRUE)
 PrSd
@@ -56,7 +63,7 @@ head(tribulusSD)
 #plot with ggplot
 ggplot(tribulusSD, aes(PC1, PC2, col = island)) + stat_ellipse(geom = "polygon", col = "black", alpha = 0.5) + geom_point(shape = 21, col = "black")
 
-#PCA with only length width and depth
+#############################PCA with only length width and depth#############################################
 tribulusdepth <- clean_d
 
 PrD <- prcomp(tribulusdepth[,8:10], scale. = TRUE)
