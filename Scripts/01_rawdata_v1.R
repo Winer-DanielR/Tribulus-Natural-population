@@ -28,6 +28,7 @@ summary(Pr)
 plot(Pr, type = "l")
 biplot(Pr, scale = 0)
 
+
 #Extracting PC scores
 str(Pr)
 Pr$x
@@ -36,6 +37,7 @@ tribulusPC <- cbind(tribulus, Pr$x[,1:3])
 head(tribulusPC)
 #plot with ggplot
 ggplot(tribulusPC, aes(PC1, PC2, col = island)) + stat_ellipse(geom = "polygon", col = "black", alpha = 0.5) + geom_point(shape = 21, col = "black")
+custom_pca()
 
 ###############Including spine distance BUT ommiting 2019 dataaset
 clean_sd <- filter(clean_s, !is.na(spine_tip_distance))
@@ -74,6 +76,4 @@ head(depthPC)
 ggplot(depthPC, aes(PC1, PC2, col = island)) + stat_ellipse(geom = "polygon", col = "black", alpha = 0.5) + geom_point(shape = 21, col = "black")
 
 #plots in multiple views
-par(mfrow=c(2,2)
-
-
+par(mfrow=c(2,2))
