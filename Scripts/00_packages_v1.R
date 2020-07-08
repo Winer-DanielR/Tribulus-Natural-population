@@ -8,7 +8,26 @@
 ### 
 ### Package script
 
+
+
 library(tidyverse)
 library(lme4)
 library(lmerTest)
 library(readr)
+
+### Sofia's Library ###
+
+library(gdata)
+library(plyr)
+library(car)
+library(MuMIn)
+library(magrittr)
+library(Rmisc)
+library(MASS)
+library(gdata)
+library(car)
+library(pscl)
+library(AER)
+require(nlme)
+require(GGally)
+require(reshape2)
