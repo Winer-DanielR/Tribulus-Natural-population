@@ -99,7 +99,7 @@ For each trait I used those models I checked assumptions (as Sofia did) and look
 
 ### Summary Results Length:
 
-```{r model summary}
+```{r model summary, echo=FALSE}
 summary(lm.length)
 ```
 
@@ -109,7 +109,7 @@ ranova(lm.length)
 ```
 
 #### Checking assumptions *length*:
-```{r}
+```{r echo=FALSE}
 plot(lm.length)
 opar <- par(mfrow=c(2,2))
 hist(tribulusPC$length)
@@ -138,7 +138,7 @@ ranova(lm.width)
 
 
 #### Checking assumptions *width*:
-```{r}
+```{r echo=FALSE}
 plot(lm.width)
 opar <- par(mfrow=c(2,2))
 hist(tribulusPC$width)
@@ -169,7 +169,7 @@ ranova(lm.depth)
 
 
 #### Checking assumptions *depth*:
-```{r}
+```{r echo=FALSE}
 plot(lm.depth)
 opar <- par(mfrow=c(2,2))
 hist(tribulusPC$depth)
@@ -197,7 +197,7 @@ ranova(lm.longspine)
 
 
 #### Checking assumptions *longest spine*:
-```{r}
+```{r echo=FALSE}
 plot(lm.longspine)
 opar <- par(mfrow=c(2,2))
 hist(tribulusPC$longest_spine)
@@ -219,13 +219,20 @@ Spine tip distance model removed NAs only uses data from 2017-2018
 summary(lm.tipdist)
 ```
 
+
 #### Testing significance of each random effects:
+
+
 ```{r}
 ranova(lm.tipdist)
 ```
 
+
+
 #### Checking assumptions *spine tip distance*:
-```{r}
+
+
+```{r echo=FALSE}
 plot(lm.tipdist)
 opar <- par(mfrow=c(2,2))
 hist(tribulusPC$spine_tip_distance)
@@ -239,20 +246,31 @@ par(opar)
 
 [Top](#generalized-linear-model)
 
+
+
 ### Summary Results Lower Spine
+
+
 ```{r}
 summary(lm.lowspines)
 ```
 
+
 #### Lower Spine plot
+
+
 ```{r}
 plot(lm.lowspines)
 ```
 
 #### Testing significance of each random effects:
+
 This was done manually given that lower spine is a binomial trait. Similar to Sofia's approach I created a model with all the random effects: year, island, island:population and then compared with other models removing each effect and test for significance.
 
+
 ##### Island:Population removed
+
+
 ```{r}
 summary(mred)
 ```
@@ -261,19 +279,24 @@ summary(mred)
 anova(mfull, mred)
 ```
 
+
 ##### Island removed
 
-```{r}
+
+```{r echo=FALSE}
 summary(mred2)
 ```
 
 
-```{r}
+```{r echo=FALSE}
 anova(mfull, mred2)
 ```
 
 
+
 ##### Population removed
+
+
 
 ```{r}
 summary(mred3)
