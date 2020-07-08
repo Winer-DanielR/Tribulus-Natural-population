@@ -56,10 +56,6 @@ descrip.data <- as.data.frame(t(sapply(tribulusPC[,c(8:12)],
 ### Multiple sites within an island are considered random and nested within island
 
 
-### Libraries ###
-library(lme4)
-library(lmerTest)
-
 ###----------- Length -------------- ### I could consider all the other interactions
 lm.length <- lmer(length ~ 1 + (1|year) + (1|island) + (1|island:population), data = tribulusPC, REML = T)
 
