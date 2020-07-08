@@ -22,7 +22,7 @@ clean_d <- filter(clean_l, !is.na(depth))
 clean_s <- filter(clean_d, !is.na(longest_spine))
 
 
-################spine tip distance measurements were ommited in 2019. This is a PCA of all variables BUT spine distance from 2017 - 2019############
+################spine tip distance measurements were ommited in 2019. This is a PCA of morphology without spine tip distance from 2017 - 2019############
 tribulus <- clean_s
 Pr <- prcomp(tribulus[,8:11], scale. = TRUE)
 Pr
@@ -41,7 +41,8 @@ head(tribulusPC)
 ggplot(tribulusPC, aes(PC1, PC2, col = island)) + stat_ellipse(geom = "polygon", col = "black", alpha = 0.5) + geom_point(shape = 21, col = "black")
 custom_pca()
 
-#### I removed four outliers that were from 2018 in Santa Cruz that showed larger sizes overall. I also corrected four outliers that showed mistakes in the measurements. 
+#### I removed four outliers that were from 2018 in Santa Cruz that showed larger sizes overall. 
+#### I also corrected four outliers that showed mistakes in the measurements. 
 
 
 
