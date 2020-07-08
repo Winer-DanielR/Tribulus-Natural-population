@@ -7,26 +7,283 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+source("00_packages_v1.R", local = knitr::knit_global())
+source("01_rawdata_v1.R", local = knitr::knit_global())
 source("02_PCMeans_v1.R", local = knitr::knit_global())
 source("03_Variance_Partition_v1.R", local = knitr::knit_global())
 ```
 
-## R Markdown
+# Summary results
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# Data cleaning
+I did a series of PCAs using the variables that were measured continously between 2017 - 2019. I choose these years because 2014 - 2016 were already analysed by Sofia Carvajal. Although we can include these in further analysis (**PTA**) or selection estimates. I removed NAs, check for outliers and corrected some values from the raw data.The clean subset of data was saved as a second table called [**TribulusPC**](https://github.com/Winer-DanielR/Tribulus-Natural-population/tree/master/Data/Processed) this new dataset was used for the following analysis.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## General PCA
+The PCA used the following variables:
+
+- *length*
+- *width*
+- *depth*
+- *longest spine*
+
+I did not include *spine tip distance* since I did not measure that trait in 2019 due to the measurements involving a lot of guessing given that most of the mericarps did not have completed spines.
+
+### PCA summary
+
+```{r Summary PCA, echo=FALSE}
+summary(Pr)
+```
+
+```{r PCA individual, echo=FALSE, fig.cap= "Left: Variance explained per PC. Rigth: Individual PCA as described above."}
+par(mfrow=c(1,2))
+plot(Pr, type = "l")
+biplot(Pr, scale = 0)
+
+```
+
+
+## PCA means
+
+Then I estimated the means of the PC scores obtained above and plot them in different ways to visualize the patters of variation.
+
+Here I estimated the means per population and years for each island:
+
+```{r PCA means, echo=FALSE}
+ggplot(PC_means_year_pop, aes(PC1_mean, PC2_mean)) + geom_point(aes(color = island, size = 5))
+
+```
+
+
+Here I estimated the means per year and sorted by island. -You can see there is a trend per year that goes in different directions-:
+
+```{r PCA means per year, echo=FALSE}
+ggplot(PC_means_year_island, aes(PC1_mean, PC2_mean)) + geom_point(aes(shape = island, size = 5, color = year))
+```
+
+
+## Variance Partition Analysis
+
+I reviewed Sofia's code and use it as a reference to do the partition analysis. I ran a series of individual models per trait. I made sure that population was nested within islands and included island and year as random models. I edited the dataset to make all the other variables factors.
+
+### Descriptive data:
+
+```{r Descriptive, echo=FALSE}
+descrip.data
+```
+
+```{r Descriptive general, echo=FALSE}
+pairs(tribulusPC[,8:14])
+```
+
+
+### Generalized linear model:
+
+lmer(*trait* ~ 1 + (1|year) + (1|island) + (1|island:population), data = tribulusPC, REML = T)
+
+Where *trait* was each of the measured traits:
+
+- [*length*](#summary-results-length)
+- [*width*](#summary-results-width)
+- [*depth*](#summary-results-depth)
+- [*longest spine*](#summary-results-longest-spine)
+- [*spine tip distance*](#summary-results-spine-tip-tistance)
+
+For *lower spine* I used a different model since is a binomial trait:
+
+glmer(lower_spine ~ 1 + (1|year) + (1|island) + (1|island:population), data = tribulusPC, na.action = na.omit, family = binomial)
+
+**I did not use *spine position* but I can include that as well**
+**I can do a similar analysis per island**
+
+For each trait I used those models I checked assumptions (as Sofia did) and looked at the variance explained by each trait and looked at the significance effect of each random factor: year, island and population within island.
+
+### Summary Results Length:
 
 ```{r model summary}
 summary(lm.length)
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(lm.length)
+#### Testing significance of each random effects:
+```{r}
+ranova(lm.length)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+#### Checking assumptions *length*:
+```{r}
+plot(lm.length)
+opar <- par(mfrow=c(2,2))
+hist(tribulusPC$length)
+plot(fitted(lm.length),resid(lm.length)) 
+abline(h=0,lty=2,col="red")
+qqnorm(resid(lm.length))
+qqline(resid(lm.length), col="red")
+hist(resid(lm.length)) 
+par(opar)
+```
+
+[Top](#generalized-linear-model)
+
+### Summary Results Width
+```{r}
+summary(lm.width)
+
+```
+
+
+#### Testing significance of each random effects:
+```{r}
+ranova(lm.width)
+
+```
+
+
+#### Checking assumptions *width*:
+```{r}
+plot(lm.width)
+opar <- par(mfrow=c(2,2))
+hist(tribulusPC$width)
+plot(fitted(lm.width),resid(lm.width)) 
+abline(h=0,lty=2,col="red")
+qqnorm(resid(lm.width))
+qqline(resid(lm.width), col="red")
+hist(resid(lm.width)) 
+par(opar)
+
+```
+
+[Top](#generalized-linear-model)
+
+
+### Summary Results Depth
+```{r}
+summary(lm.depth)
+
+```
+
+
+#### Testing significance of each random effects:
+```{r}
+ranova(lm.depth)
+
+```
+
+
+#### Checking assumptions *depth*:
+```{r}
+plot(lm.depth)
+opar <- par(mfrow=c(2,2))
+hist(tribulusPC$depth)
+plot(fitted(lm.depth),resid(lm.depth)) 
+abline(h=0,lty=2,col="red")
+qqnorm(resid(lm.depth))
+qqline(resid(lm.depth), col="red")
+hist(resid(lm.depth)) 
+par(opar)
+
+```
+
+[Top](#generalized-linear-model)
+
+### Summary Results Longest Spine
+```{r}
+summary(lm.longspine)
+```
+
+
+#### Testing significance of each random effects:
+```{r}
+ranova(lm.longspine)
+```
+
+
+#### Checking assumptions *longest spine*:
+```{r}
+plot(lm.longspine)
+opar <- par(mfrow=c(2,2))
+hist(tribulusPC$longest_spine)
+plot(fitted(lm.longspine),resid(lm.longspine)) 
+abline(h=0,lty=2,col="red")
+qqnorm(resid(lm.longspine))
+qqline(resid(lm.longspine), col="red")
+hist(resid(lm.longspine)) 
+par(opar)
+```
+
+[Top](#generalized-linear-model)
+
+### Summary Results Spine Tip Distance
+
+Spine tip distance model removed NAs only uses data from 2017-2018
+
+```{r}
+summary(lm.tipdist)
+```
+
+#### Testing significance of each random effects:
+```{r}
+ranova(lm.tipdist)
+```
+
+#### Checking assumptions *spine tip distance*:
+```{r}
+plot(lm.tipdist)
+opar <- par(mfrow=c(2,2))
+hist(tribulusPC$spine_tip_distance)
+plot(fitted(lm.tipdist),resid(lm.tipdist)) 
+abline(h=0,lty=2,col="red")
+qqnorm(resid(lm.tipdist))
+qqline(resid(lm.tipdist), col="red")
+hist(resid(lm.tipdist)) 
+par(opar)
+```
+
+[Top](#generalized-linear-model)
+
+### Summary Results Lower Spine
+```{r}
+summary(lm.lowspines)
+```
+
+#### Lower Spine plot
+```{r}
+plot(lm.lowspines)
+```
+
+#### Testing significance of each random effects:
+This was done manually given that lower spine is a binomial trait. Similar to Sofia's approach I created a model with all the random effects: year, island, island:population and then compared with other models removing each effect and test for significance.
+
+##### Island:Population removed
+```{r}
+summary(mred)
+```
+
+```{r}
+anova(mfull, mred)
+```
+
+##### Island removed
+
+```{r}
+summary(mred2)
+```
+
+
+```{r}
+anova(mfull, mred2)
+```
+
+
+##### Population removed
+
+```{r}
+summary(mred3)
+```
+
+
+```{r}
+anova(mfull, mred3)
+```
+
+
+[Top](#generalized-linear-model)
+
