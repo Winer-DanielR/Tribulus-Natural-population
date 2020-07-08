@@ -10,13 +10,13 @@
 #Tribulus1 has replaces all spine distances of 0 into NAs##########
 
 tribulus <- read.csv("~/R/Tribulus/Tribulus Natural populations/Tribulus-Natural-population/Data/Raw/All time Tribulus1.csv")
-head(natpop)
-View(tribulus)
-summary(natpop)
+#head(natpop)
+#View(tribulus)
+#summary(natpop)
 
 #Extracting data from 2017 - 2019
 year <- filter(tribulus, year >= 2017)
-View(year)
+#View(year)
 clean_l <- filter(year, !is.na(length))
 clean_d <- filter(clean_l, !is.na(depth))
 clean_s <- filter(clean_d, !is.na(longest_spine))
@@ -39,7 +39,7 @@ tribulusPC <- cbind(tribulus, Pr$x[,1:3])
 head(tribulusPC)
 #plot with ggplot
 ggplot(tribulusPC, aes(PC1, PC2, col = island)) + stat_ellipse(geom = "polygon", col = "black", alpha = 0.5) + geom_point(shape = 21, col = "black")
-custom_pca()
+#custom_pca()
 
 #### I removed four outliers that were from 2018 in Santa Cruz that showed larger sizes overall. 
 #### I also corrected four outliers that showed mistakes in the measurements. 
@@ -76,7 +76,7 @@ biplot(PrD, scale = 0)
 str(PrD)
 PrD$x
 #Adding PC scores to dataset
-View(tribulusdepth)
+#View(tribulusdepth)
 depthPC <- cbind(tribulusdepth, PrD$x[,1:2])
 head(depthPC)
 
