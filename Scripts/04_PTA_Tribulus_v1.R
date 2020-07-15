@@ -2,7 +2,7 @@
 ################Tribulus Natural Population Dataset##############
 #################################################################
 ### Phenotypic Trayectory Analysis          ###
-### Script based on Collyer and Adams 2007  ###
+### Script based on Adams and Coyller 2009  ###
 ### By Daniel Reyes Corral                  ###
 
 
