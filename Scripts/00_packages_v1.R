@@ -31,3 +31,12 @@ library(AER)
 require(nlme)
 require(GGally)
 require(reshape2)
+
+### PTA Paola ###
+
+library(beepr)
+library(car)
+library(lattice)
+library(MuMIn)
+library(reshape2) 
+library(geomorph)
