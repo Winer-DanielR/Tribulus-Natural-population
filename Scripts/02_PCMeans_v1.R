@@ -1,16 +1,16 @@
 ##### Using the dataset of Tribulus PCs to calculate PC means per population ######
 #Export this dataset into a new CSV for records
+tribulusPC1 <- write.csv(tribulusPC, "C:/Users/Daniel/Documents/R/Tribulus/Tribulus Natural populations/Tribulus-Natural-population/Data/Processed/Tribulus_PC1.csv")
+?write.csv()
 tribulusPC <- read.csv("C:/Users/Daniel/Documents/R/Tribulus/Tribulus Natural populations/Tribulus-Natural-population/Data/Processed/Tribulus_PC.csv")
 #View(tribulusPC)
 
-#Libraries
-library(tidyverse)
 
 #Means by year and population
 PC_summary1 <- group_by(tribulusPC, year, island, year.island, population, year_pop)
 PC_means_year_pop <- PC_summary1 %>% summarise_each(funs(mean, sd, se=sd(.)/sqrt(n())), PC1:PC3)
 #View(PC_means_year_pop)
-PC_year.pop <- ggplot(PC_means_year_pop, aes(PC1_mean, PC2_mean)) + geom_point(aes(color = island, size = 5))
+ggplot(PC_means_year_pop, aes(PC1_mean, PC2_mean)) + geom_point(aes(color = island, size = 5))
 
 #Means by year.island
 PC_summary2 <- group_by(tribulusPC, year, island, year.island)
