@@ -67,6 +67,7 @@ library(lme4)
 library(lmerTest)
 
 ###----------- Length -------------- ### I could consider all the other interactions
+
 lm.length <- lmer(length ~ 1 + (1|year) + (1|island) + (1|year:island) + (1|year:population) + (1|island:population), data = tribulusPC, REML = T)
 
 ### Checking assumptions
@@ -215,5 +216,262 @@ anova(mfull, mred5)
 
 
 
-###***************************************************************###
-###******** I could do these analysis per island *****************###
+############***************************************************************###
+############******** Variance partition per island *****************###
+############***************************************************************###
+
+########## Isabela ########
+
+Trib_Isabela <- subset(tribulusPC, island == "Isabela")
+
+### Droping unused factor levels aka other islands and categories
+
+Trib_Isabela <- drop.levels(Trib_Isabela) 
+str(Trib_Isabela1)
+
+###-------------------Length----------------###
+
+lm.isa.length <- lmer(length ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_Isabela, REML = T)
+plot(lm.isa.length)
+summary(lm.isa.length)
+ranova(lm.isa.length)
+
+###-------------------Width----------------###
+
+lm.isa.width <- lmer(width ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_Isabela, REML = T)
+plot(lm.isa.width)
+summary(lm.isa.width)
+ranova(lm.isa.width)
+
+###-------------------Depth----------------###
+
+lm.isa.depth <- lmer(depth ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_Isabela, REML = T)
+plot(lm.isa.depth)
+summary(lm.isa.depth)
+ranova(lm.isa.depth)
+
+###-------------------Spine Length----------------###
+
+lm.isa.spine <- lmer(longest_spine ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_Isabela, REML = T)
+plot(lm.isa.spine)
+summary(lm.isa.spine)
+ranova(lm.isa.spine)
+
+
+###-------------------Tip distance----------------###
+
+lm.isa.tipdist <- lmer(spine_tip_distance ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_Isabela, REML = T)
+plot(lm.isa.tipdist)
+summary(lm.isa.tipdist)
+ranova(lm.isa.tipdist)
+
+###-------------------Lower Spines----------------###
+
+lm.isa.lower <- glmer(lower_spine ~ 1  + (1|year) + (1|year:population) + (1|population), data = Trib_Isabela, family = binomial)
+summary(lm.isa.lower)
+plot(lm.isa.lower)
+
+#testing significance of each random effect
+
+mfull.isa <- glmer(lower_spine ~ 1  + (1|year) + (1|year:population) + (1|population), data =Trib_Isabela, family = binomial)
+
+mred.isa <- glmer(lower_spine ~ 1  + (1|year:population) + (1|population), data =Trib_Isabela, family = binomial) 
+anova(mfull.isa, mred.isa) #p values / by 2
+
+mred.isa2 <- glmer(lower_spine ~ 1  + (1|year) + (1|population), data =Trib_Isabela, family = binomial)
+anova(mfull.isa, mred.isa2) #p values / by 2
+
+mred.isa3 <- glmer(lower_spine ~ 1  + (1|year) + (1|year:population), data =Trib_Isabela, family = binomial)
+anova(mfull.isa, mred.isa3) #p values / by 2
+
+########## Santa Cruz ########
+
+Trib_Santa.Cruz <- subset(tribulusPC, island == "Santa.Cruz")
+
+### Droping unused factor levels aka other islands and categories
+
+Trib_Santa.Cruz <- drop.levels(Trib_Santa.Cruz) 
+
+
+###-------------------Length----------------###
+
+lm.cruz.length <- lmer(length ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_Santa.Cruz, REML = T)
+plot(lm.cruz.length)
+summary(lm.cruz.length)
+ranova(lm.cruz.length)
+
+###-------------------Width----------------###
+
+lm.cruz.width <- lmer(width ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_Santa.Cruz, REML = T)
+plot(lm.cruz.width)
+summary(lm.cruz.width)
+ranova(lm.cruz.width)
+
+###-------------------Depth----------------###
+
+lm.cruz.depth <- lmer(depth ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_Santa.Cruz, REML = T)
+plot(lm.cruz.depth)
+summary(lm.cruz.depth)
+ranova(lm.cruz.depth)
+
+###-------------------Spine Length----------------###
+
+lm.cruz.spine <- lmer(longest_spine ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_Santa.Cruz, REML = T)
+plot(lm.cruz.spine)
+summary(lm.cruz.spine)
+ranova(lm.cruz.spine)
+
+
+###-------------------Tip distance----------------###
+
+lm.cruz.tipdist <- lmer(spine_tip_distance ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_Santa.Cruz, REML = T)
+plot(lm.cruz.tipdist)
+summary(lm.cruz.tipdist)
+ranova(lm.cruz.tipdist)
+
+###-------------------Lower Spines----------------###
+
+lm.cruz.lower <- glmer(lower_spine ~ 1  + (1|year) + (1|year:population) + (1|population), data = Trib_Santa.Cruz, family = binomial)
+summary(lm.cruz.lower)
+plot(lm.cruz.lower)
+
+#testing significance of each random effect
+
+mfull.cruz <- glmer(lower_spine ~ 1  + (1|year) + (1|year:population) + (1|population), data =Trib_Santa.Cruz, family = binomial)
+
+mred.cruz <- glmer(lower_spine ~ 1  + (1|year:population) + (1|population), data =Trib_Santa.Cruz, family = binomial) 
+anova(mfull.cruz, mred.cruz) #p values / by 2
+
+mred.cruz2 <- glmer(lower_spine ~ 1  + (1|year) + (1|population), data =Trib_Santa.Cruz, family = binomial)
+anova(mfull.cruz, mred.cruz2) #p values / by 2
+
+mred.cruz3 <- glmer(lower_spine ~ 1  + (1|year) + (1|year:population), data =Trib_Santa.Cruz, family = binomial)
+anova(mfull.cruz, mred.cruz3) #p values / by 2
+
+
+########## San Cristobal ########
+
+Trib_San.Cristobal <- subset(tribulusPC, island == "San.Cristobal")
+
+### Droping unused factor levels aka other islands and categories
+
+Trib_San.Cristobal <- drop.levels(Trib_San.Cristobal) 
+
+###-------------------Length----------------###
+
+lm.crist.length <- lmer(length ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_San.Cristobal, REML = T)
+plot(lm.crist.length)
+summary(lm.crist.length)
+ranova(lm.crist.length)
+
+###-------------------Width----------------###
+
+lm.crist.width <- lmer(width ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_San.Cristobal, REML = T)
+plot(lm.crist.width)
+summary(lm.crist.width)
+ranova(lm.crist.width)
+
+###-------------------Depth----------------###
+
+lm.crist.depth <- lmer(depth ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_San.Cristobal, REML = T)
+plot(lm.crist.depth)
+summary(lm.crist.depth)
+ranova(lm.crist.depth)
+
+###-------------------Spine Length----------------###
+
+lm.crist.spine <- lmer(longest_spine ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_San.Cristobal, REML = T)
+plot(lm.crist.spine)
+summary(lm.crist.spine)
+ranova(lm.crist.spine)
+
+
+###-------------------Tip distance----------------###
+
+lm.crist.tipdist <- lmer(spine_tip_distance ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_San.Cristobal, REML = T)
+plot(lm.crist.tipdist)
+summary(lm.crist.tipdist)
+ranova(lm.crist.tipdist)
+
+###-------------------Lower Spines----------------###
+
+lm.crist.lower <- glmer(lower_spine ~ 1  + (1|year) + (1|year:population) + (1|population), data = Trib_San.Cristobal, family = binomial)
+summary(lm.crist.lower)
+plot(lm.crist.lower)
+
+#testing significance of each random effect
+
+mfull.crist <- glmer(lower_spine ~ 1  + (1|year) + (1|year:population) + (1|population), data =Trib_San.Cristobal, family = binomial)
+
+mred.crist <- glmer(lower_spine ~ 1  + (1|year:population) + (1|population), data =Trib_San.Cristobal, family = binomial) 
+anova(mfull.crist, mred.crist) #p values / by 2
+
+mred.crist2 <- glmer(lower_spine ~ 1  + (1|year) + (1|population), data =Trib_San.Cristobal, family = binomial)
+anova(mfull.crist, mred.crist2) #p values / by 2
+
+mred.crist3 <- glmer(lower_spine ~ 1  + (1|year) + (1|year:population), data =Trib_San.Cristobal, family = binomial)
+anova(mfull.crist, mred.crist3) #p values / by 2
+
+
+########## Floreana ########
+
+Trib_Floreana <- subset(tribulusPC, island == "Floreana")
+
+### Droping unused factor levels aka other islands and categories
+
+Trib_Floreana <- drop.levels(Trib_Floreana) 
+
+###-------------------Length----------------###
+
+lm.flor.length <- lmer(length ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_Floreana, REML = T)
+plot(lm.flor.length)
+summary(lm.flor.length)
+ranova(lm.flor.length)
+
+###-------------------Width----------------###
+
+lm.flor.width <- lmer(width ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_Floreana, REML = T)
+plot(lm.flor.width)
+summary(lm.flor.width)
+ranova(lm.flor.width)
+
+###-------------------Depth----------------###
+
+lm.flor.depth <- lmer(depth ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_Floreana, REML = T)
+plot(lm.flor.depth)
+summary(lm.flor.depth)
+ranova(lm.flor.depth)
+
+###-------------------Spine Length----------------###
+
+lm.flor.spine <- lmer(longest_spine ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_Floreana, REML = T)
+plot(lm.flor.spine)
+summary(lm.flor.spine)
+ranova(lm.flor.spine)
+
+
+###-------------------Tip distance----------------###
+
+lm.flor.tipdist <- lmer(spine_tip_distance ~ 1 + (1|year) + (1|year:population) + (1|population), data = Trib_Floreana, REML = T)
+plot(lm.flor.tipdist)
+summary(lm.flor.tipdist)
+ranova(lm.flor.tipdist)
+
+###-------------------Lower Spines----------------###
+
+lm.flor.lower <- glmer(lower_spine ~ 1  + (1|year) + (1|year:population) + (1|population), data = Trib_Floreana, family = binomial)
+summary(lm.flor.lower)
+plot(lm.flor.lower)
+
+#testing significance of each random effect
+
+mfull.flor <- glmer(lower_spine ~ 1  + (1|year) + (1|year:population) + (1|population), data =Trib_Floreana, family = binomial)
+
+mred.flor <- glmer(lower_spine ~ 1  + (1|year:population) + (1|population), data =Trib_Floreana, family = binomial) 
+anova(mfull.flor, mred.flor) #p values / by 2
+
+mred.flor2 <- glmer(lower_spine ~ 1  + (1|year) + (1|population), data =Trib_Floreana, family = binomial)
+anova(mfull.flor, mred.flor2) #p values / by 2
+
+mred.flor3 <- glmer(lower_spine ~ 1  + (1|year) + (1|year:population), data =Trib_Floreana, family = binomial)
+anova(mfull.flor, mred.flor3) #p values / by 2
