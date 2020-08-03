@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1595284828458.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "920727820",
+    "id" : "6C2457E0",
+    "lastKnownWriteTime" : 1596482519,
+    "last_content_update" : 1596482519,
+    "path" : "~/R/Tribulus/Tribulus Natural populations/Tribulus-Natural-population/Scripts/01_rawdata_v1.R",
+    "project_path" : "Scripts/01_rawdata_v1.R",
+    "properties" : {
+        "cursorPosition" : "21,0",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

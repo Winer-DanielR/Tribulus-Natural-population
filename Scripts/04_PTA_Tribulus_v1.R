@@ -1,14 +1,10 @@
+#################################################################
+################Tribulus Natural Population Dataset##############
+#################################################################
+### Phenotypic Trayectory Analysis          ###
+### Script based on Adams and Coyller 2009  ###
+### By Daniel Reyes Corral                  ###
 
-library(beepr)
-library(car)
-library(ggplot2)
-library(lattice)
-library(lme4)
-library(MuMIn)
-library(plyr)
-library(reshape2) 
-library(geomorph)
-library(tidyverse)
 
 # CODE ASSUMES factor 1 = lineage, factor 2=evol. levels
 

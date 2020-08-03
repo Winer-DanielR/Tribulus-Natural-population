@@ -5,10 +5,7 @@ tribulusPC1 <- write.csv(tribulusPC, "C:/Users/Daniel/Documents/R/Tribulus/Tribu
 tribulusPC <- read.csv("C:/Users/Daniel/Documents/R/Tribulus/Tribulus Natural populations/Tribulus-Natural-population/Data/Processed/Tribulus_PC.csv")
 #View(tribulusPC)
 
-<<<<<<< HEAD
-=======
 
->>>>>>> master
 #Means by year and population
 PC_summary1 <- group_by(tribulusPC, year, island, year.island, population, year_pop)
 PC_means_year_pop <- PC_summary1 %>% summarise_each(funs(mean, sd, se=sd(.)/sqrt(n())), PC1:PC3)

@@ -43,7 +43,7 @@ ggplot(tribulusPC, aes(PC1, PC2, col = island)) + stat_ellipse(geom = "polygon",
 #custom_pca()
 =======
 
->>>>>>> master
+>>>>>>> f3a40b8ee4e6faf4a1728334c90eceb1e767b655
 
 #### I removed four outliers that were from 2018 in Santa Cruz that showed larger sizes overall. 
 #### I also corrected four outliers that showed mistakes in the measurements. 
