@@ -14,7 +14,13 @@ library(tidyverse)
 library(lme4)
 library(lmerTest)
 library(readr)
-
+install.packages("ellipse")
+library(ellipse)
+install.packages("rgl")
+library(rgl)
+install.packages("factoextra")
+library(factoextra)
+library(FactoMineR)
 ### Sofia's Library ###
 
 library(gdata)
